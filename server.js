@@ -1,10 +1,30 @@
-// CRM Sender - sends PDF statements by WhatsApp, Email and SMS. Needs Node 18+.
+// CRM Server: login (Gmail / mobile), shared data for all devices, approvals by Super Admin, PDF sending. Node 18+.
 const http=require("http"),fs=require("fs"),path=require("path"),crypto=require("crypto");
 const E=process.env,PORT=E.PORT||3000,KEY=E.API_KEY||"",BASE=(E.PUBLIC_URL||"").replace(/\/$/,"");
+const SU=(E.SUPABASE_URL||"").replace(/\/$/,""),SK=E.SUPABASE_KEY||"",OWNER=String(E.OWNER||"").trim().toLowerCase();
+const SECRET=E.AUTH_SECRET||crypto.createHash("sha256").update("bm|"+SK).digest("hex");
 const FD=path.join(__dirname,"files");fs.mkdirSync(FD,{recursive:true});
-const H={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"Content-Type,x-api-key","Access-Control-Allow-Methods":"GET,POST,OPTIONS"};
+const H={"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"Content-Type,x-api-key,Authorization","Access-Control-Allow-Methods":"GET,POST,PUT,OPTIONS"};
 const out=(res,c,o)=>{res.writeHead(c,{"Content-Type":"application/json",...H});res.end(JSON.stringify(o))};
-const body=req=>new Promise((ok,no)=>{let b="";req.on("data",d=>{b+=d;if(b.length>25e6){no(new Error("File too large"));req.destroy()}});req.on("end",()=>{try{ok(b?JSON.parse(b):{})}catch(e){no(e)}});req.on("error",no)});
+const body=req=>new Promise((ok,no)=>{let b="";req.on("data",d=>{b+=d;if(b.length>40e6){no(new Error("Too large"));req.destroy()}});req.on("end",()=>{try{ok(b?JSON.parse(b):{})}catch(e){no(e)}});req.on("error",no)});
+/* ---------- database (Supabase REST, table kv) ---------- */
+const dbh=()=>{const h={apikey:SK,"Content-Type":"application/json"};if(SK.startsWith("eyJ"))h.Authorization="Bearer "+SK;return h};
+async function dbGet(key,cols){const r=await fetch(`${SU}/rest/v1/kv?key=eq.${key}&select=${cols}`,{headers:dbh()});if(!r.ok)throw new Error("DB read failed "+r.status+" "+(await r.text()).slice(0,150));return (await r.json())[0]||null}
+async function dbCas(key,base,value){let r;if(!base){r=await fetch(`${SU}/rest/v1/kv?on_conflict=key`,{method:"POST",headers:{...dbh(),Prefer:"resolution=ignore-duplicates,return=representation"},body:JSON.stringify({key,ver:1,value})})}
+else r=await fetch(`${SU}/rest/v1/kv?key=eq.${key}&ver=eq.${base}&select=ver`,{method:"PATCH",headers:{...dbh(),Prefer:"return=representation"},body:JSON.stringify({ver:base+1,value})});
+if(!r.ok)throw new Error("DB write failed "+r.status+" "+(await r.text()).slice(0,150));return (await r.json()).length?base+1:null}
+/* ---------- users ---------- */
+let UC=null,UT=0;
+async function users(){if(UC&&Date.now()-UT<15000)return UC;const r=await dbGet("users","ver,value");UC={ver:r?r.ver:0,list:r?(r.value.list||[]):[]};UT=Date.now();return UC}
+async function saveUsers(mut){for(let i=0;i<6;i++){UC=null;const u=await users(),list=JSON.parse(JSON.stringify(u.list)),res=mut(list);if(res&&res.err)return res;const v=await dbCas("users",u.ver,{list});if(v){UC={ver:v,list};UT=Date.now();return res}}throw new Error("Users busy, try again")}
+const normId=s=>{s=String(s||"").trim().toLowerCase();if(/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(s))return{em:s};const d=s.replace(/\D/g,"");return d.length>=10?{ph:d.slice(-10)}:null};
+const findU=(list,id)=>{const n=normId(id);return n?list.find(u=>(n.em&&u.em==n.em)||(n.ph&&u.ph==n.ph)):null};
+const hp=(p,s)=>crypto.scryptSync(String(p),s,32).toString("hex"),pub=u=>({id:u.id,name:u.name,email:u.em||"",phone:u.ph||"",role:u.role,status:u.status});
+const sign=s=>crypto.createHmac("sha256",SECRET).update(s).digest("hex"),same=(a,b)=>a.length==b.length&&crypto.timingSafeEqual(Buffer.from(a),Buffer.from(b));
+const mkTok=u=>{const b=u.id+"."+(Date.now()+30*864e5);return b+"."+sign(b)};
+async function auth(req){const t=String(req.headers.authorization||"").replace(/^Bearer /,""),p=t.split(".");if(p.length!=3||!same(sign(p[0]+"."+p[1]),p[2])||+p[1]<Date.now())return null;const u=(await users()).list.find(x=>x.id==p[0]);return u&&u.status=="active"?u:null}
+const tries=new Map();const blocked=k=>{const t=tries.get(k);return t&&t.n>=6&&Date.now()-t.t<6e5};const fail=k=>{const t=tries.get(k)||{n:0,t:0};t.n++;t.t=Date.now();tries.set(k,t)};
+/* ---------- sending ---------- */
 const has={email:()=>!!(E.BREVO_API_KEY||(E.SMTP_USER&&E.SMTP_PASS)),whatsapp:()=>!!(E.WA_TOKEN&&E.WA_PHONE_ID),sms:()=>!!(E.TWILIO_SID&&E.TWILIO_TOKEN&&E.TWILIO_FROM&&BASE)};
 async function email(d){if(E.BREVO_API_KEY){const r=await fetch("https://api.brevo.com/v3/smtp/email",{method:"POST",headers:{"api-key":E.BREVO_API_KEY,"Content-Type":"application/json",accept:"application/json"},body:JSON.stringify({sender:{name:d.company,email:E.BREVO_SENDER||E.SMTP_USER},to:[{email:d.to,name:d.name}],subject:`${d.company} - Advance statement ${d.month}`,textContent:d.text,attachment:[{name:d.filename,content:d.pdf}]})});
 if(!r.ok){const j=await r.json().catch(()=>({}));throw new Error(j.message||"Brevo error "+r.status)}return}
@@ -18,16 +38,43 @@ r=await fetch(g+"/messages",{method:"POST",headers:{...h,"Content-Type":"applica
 async function sms(d){const t=crypto.randomBytes(12).toString("hex");fs.writeFileSync(path.join(FD,t+".pdf"),Buffer.from(d.pdf,"base64"));
 const p=new URLSearchParams({To:"+"+d.to,From:E.TWILIO_FROM,Body:`${d.company}: ${d.month} advance baaki Rs ${Math.round(d.amount)}. Statement: ${BASE}/f/${t}.pdf`});
 const r=await fetch(`https://api.twilio.com/2010-04-01/Accounts/${E.TWILIO_SID}/Messages.json`,{method:"POST",headers:{Authorization:"Basic "+Buffer.from(E.TWILIO_SID+":"+E.TWILIO_TOKEN).toString("base64")},body:p}),j=await r.json();if(j.code||j.error_message)throw new Error(j.message||j.error_message)}
+const CH={email,whatsapp,sms};
 const ver=n=>+((n.match(/v(\d+)/i)||[0,0])[1]);
 const page=()=>{const l=fs.readdirSync(__dirname).filter(n=>/^crm.*\.html$/i.test(n)).sort((a,b)=>ver(a)-ver(b)||a.localeCompare(b));return l.length?path.join(__dirname,l[l.length-1]):null};
-const CH={email,whatsapp,sms};
-http.createServer(async(req,res)=>{try{const u=req.url.split("?")[0];
-if(req.method=="OPTIONS"){res.writeHead(204,H);return res.end()}
-if(req.method=="GET"&&/^\/f\/[a-f0-9]{24}\.pdf$/.test(u)){const f=path.join(FD,path.basename(u));if(!fs.existsSync(f))return out(res,404,{error:"Not found"});res.writeHead(200,{"Content-Type":"application/pdf",...H});return res.end(fs.readFileSync(f))}
-if(req.method=="GET"&&(u=="/"||u=="/crm.html")){const f=page();if(!f)return out(res,404,{error:"Put crm.html next to server.js"});res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store"});return res.end(fs.readFileSync(f))}
-if(!KEY)return out(res,500,{error:"Server has no API_KEY set"});
-if(req.headers["x-api-key"]!==KEY)return out(res,401,{error:"Wrong secret key"});
-if(req.method=="GET"&&u=="/health")return out(res,200,{ok:true,email:has.email(),whatsapp:has.whatsapp(),sms:has.sms()});
-if(req.method=="POST"&&u=="/send"){const d=await body(req);if(!CH[d.channel])return out(res,400,{error:"Unknown channel"});if(!has[d.channel]())return out(res,400,{error:d.channel+" is not set up on the server"});
-if(!d.to||!d.pdf)return out(res,400,{error:"Missing recipient or PDF"});await CH[d.channel](d);return out(res,200,{ok:true})}
-out(res,404,{error:"Not found"})}catch(e){out(res,500,{error:String(e.message||e)})}}).listen(PORT,()=>console.log("CRM Sender running on port "+PORT));
+/* ---------- routes ---------- */
+http.createServer(async(req,res)=>{try{const u=req.url.split("?")[0],M=req.method;
+if(M=="OPTIONS"){res.writeHead(204,H);return res.end()}
+if(M=="GET"&&/^\/f\/[a-f0-9]{24}\.pdf$/.test(u)){const f=path.join(FD,path.basename(u));if(!fs.existsSync(f))return out(res,404,{error:"Not found"});res.writeHead(200,{"Content-Type":"application/pdf",...H});return res.end(fs.readFileSync(f))}
+if(M=="GET"&&(u=="/"||u=="/crm.html")){const f=page();if(!f)return out(res,404,{error:"Put crm.html next to server.js"});res.writeHead(200,{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store"});return res.end(fs.readFileSync(f))}
+if(M=="GET"&&u=="/auth/status")return out(res,200,{server:true,storage:!!(SU&&SK),owner:!!OWNER});
+if(!(SU&&SK)&&u.startsWith("/auth")||!(SU&&SK)&&["/data","/users","/me"].some(p=>u.startsWith(p)))return out(res,500,{error:"Server par SUPABASE_URL / SUPABASE_KEY set nahi hai"});
+if(M=="POST"&&u=="/auth/register"){const d=await body(req),n=normId(d.id);if(!n)return out(res,400,{error:"Sahi Gmail ya 10 digit mobile number likho"});if(String(d.password||"").length<6)return out(res,400,{error:"Password kam se kam 6 akshar ka ho"});
+const name=String(d.name||"").trim().slice(0,40)||"User";
+const r=await saveUsers(list=>{if(findU(list,d.id))return{err:"Ye Gmail / number pehle se registered hai"};const first=!list.length;
+if(first&&!(OWNER&&((n.em&&n.em==OWNER)||(n.ph&&OWNER.replace(/\D/g,"").slice(-10)==n.ph))))return{err:"Pehla account sirf owner ka ho sakta hai. Render mein OWNER set karo."};
+const salt=crypto.randomBytes(8).toString("hex");list.push({id:crypto.randomBytes(6).toString("hex"),name,...n,salt,h:hp(d.password,salt),role:first?"super":"admin",status:first?"active":"pending",at:new Date().toISOString()});return{ok:true,status:first?"active":"pending"}});
+return r.err?out(res,400,{error:r.err}):out(res,200,r)}
+if(M=="POST"&&u=="/auth/login"){const d=await body(req),k=(req.socket.remoteAddress||"")+"|"+String(d.id).toLowerCase();if(blocked(k))return out(res,429,{error:"Bahut galat try. 10 minute baad dobara karo."});
+const us=await users(),x=findU(us.list,d.id);if(!x||!same(hp(d.password||"",x.salt),x.h)){fail(k);return out(res,401,{error:"Gmail/number ya password galat hai"})}
+if(x.status=="pending")return out(res,403,{error:"Aapki request Super Admin ke paas hai. Approve hone par login chalega."});if(x.status!="active")return out(res,403,{error:"Ye account band hai. Super Admin se baat karo."});
+tries.delete(k);return out(res,200,{token:mkTok(x),user:pub(x)})}
+if(M=="POST"&&u=="/send"){const me=await auth(req);if(!me&&!(KEY&&req.headers["x-api-key"]===KEY))return out(res,401,{error:"Login karo"});
+const d=await body(req);if(!CH[d.channel])return out(res,400,{error:"Unknown channel"});if(!has[d.channel]())return out(res,400,{error:d.channel+" is not set up on the server"});if(!d.to||!d.pdf)return out(res,400,{error:"Missing recipient or PDF"});await CH[d.channel](d);return out(res,200,{ok:true})}
+if(M=="GET"&&u=="/health"&&KEY&&req.headers["x-api-key"]===KEY)return out(res,200,{ok:true,email:has.email(),whatsapp:has.whatsapp(),sms:has.sms()});
+const me=await auth(req);if(!me)return out(res,401,{error:"Login karo",login:true});
+if(M=="GET"&&u=="/me")return out(res,200,{user:pub(me)});
+if(M=="POST"&&u=="/auth/password"){const d=await body(req);if(!same(hp(d.old||"",me.salt),me.h))return out(res,400,{error:"Current password galat hai"});if(String(d.next||"").length<6)return out(res,400,{error:"Naya password kam se kam 6 akshar ka ho"});
+await saveUsers(l=>{const x=l.find(y=>y.id==me.id);x.salt=crypto.randomBytes(8).toString("hex");x.h=hp(d.next,x.salt);return{ok:true}});return out(res,200,{ok:true})}
+if(M=="GET"&&u=="/data/ver"){const r=await dbGet("data","ver");const o={ver:r?r.ver:0};if(me.role=="super")o.pending=(await users()).list.filter(x=>x.status=="pending").length;return out(res,200,o)}
+if(M=="GET"&&u=="/data"){const r=await dbGet("data","ver,value");return out(res,200,r?{ver:r.ver,data:r.value}:{ver:0,data:null})}
+if(M=="PUT"&&u=="/data"){const d=await body(req);if(!d.data||!Array.isArray(d.data.w)||!Array.isArray(d.data.adv))return out(res,400,{error:"Invalid data"});const v=await dbCas("data",+d.base||0,d.data);
+if(v)return out(res,200,{ok:true,ver:v});const r=await dbGet("data","ver,value");return out(res,409,{conflict:true,ver:r?r.ver:0,data:r?r.value:null})}
+if(u.startsWith("/users")){if(me.role!="super")return out(res,403,{error:"Sirf Super Admin"});
+if(M=="GET"&&u=="/users")return out(res,200,{users:(await users()).list.map(pub).sort((a,b)=>(b.status=="pending")-(a.status=="pending"))});
+if(M=="POST"&&u=="/users/add"){const d=await body(req),n=normId(d.id);if(!n||String(d.password||"").length<6)return out(res,400,{error:"Sahi Gmail/number aur 6+ akshar ka password do"});
+const r=await saveUsers(l=>{if(findU(l,d.id))return{err:"Pehle se registered hai"};const salt=crypto.randomBytes(8).toString("hex");l.push({id:crypto.randomBytes(6).toString("hex"),name:String(d.name||"").trim().slice(0,40)||"User",...n,salt,h:hp(d.password,salt),role:"admin",status:"active",at:new Date().toISOString()});return{ok:true}});return r.err?out(res,400,{error:r.err}):out(res,200,r)}
+if(M=="POST"&&u=="/users/act"){const d=await body(req),r=await saveUsers(l=>{const x=l.find(y=>y.id==d.uid);if(!x)return{err:"User nahi mila"};
+if(d.act=="approve"){x.status="active";x.role="admin"}else if(d.act=="block"){if(x.id==me.id)return{err:"Apne aap ko block nahi kar sakte"};x.status="blocked"}else if(d.act=="unblock")x.status="active";
+else if(d.act=="reset"){if(String(d.value||"").length<6)return{err:"Password kam se kam 6 akshar ka ho"};x.salt=crypto.randomBytes(8).toString("hex");x.h=hp(d.value,x.salt)}
+else if(d.act=="remove"){if(x.id==me.id)return{err:"Apne aap ko remove nahi kar sakte"};l.splice(l.indexOf(x),1)}else return{err:"Unknown action"};return{ok:true}});return r.err?out(res,400,{error:r.err}):out(res,200,r)}}
+out(res,404,{error:"Not found"})}catch(e){out(res,500,{error:String(e.message||e)})}}).listen(PORT,()=>console.log("CRM server running on port "+PORT));
