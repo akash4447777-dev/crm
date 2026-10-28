@@ -78,3 +78,4 @@ if(d.act=="approve"){x.status="active";x.role="admin"}else if(d.act=="block"){if
 else if(d.act=="reset"){if(String(d.value||"").length<6)return{err:"Password kam se kam 6 akshar ka ho"};x.salt=crypto.randomBytes(8).toString("hex");x.h=hp(d.value,x.salt)}
 else if(d.act=="remove"){if(x.id==me.id)return{err:"Apne aap ko remove nahi kar sakte"};l.splice(l.indexOf(x),1)}else return{err:"Unknown action"};return{ok:true}});return r.err?out(res,400,{error:r.err}):out(res,200,r)}}
 out(res,404,{error:"Not found"})}catch(e){out(res,500,{error:String(e.message||e)})}}).listen(PORT,()=>console.log("CRM server running on port "+PORT));
+  
