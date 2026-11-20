@@ -29,6 +29,21 @@ function fixture(){
  context.window=context;context.globalThis=context;vm.createContext(context);vm.runInContext(nillScript,context);vm.runInContext(smartScript,context);
  return{context,data,workbook:{worksheets:[worksheet]}};
 }
+test('panel-only Auto NIL plans all active companies through today with zero carry and leaves future entries alone',()=>{
+ const{context,data}=fixture();data.adv=[
+  {id:1,w:1,d:'2026-11-20',t:'g',amt:200,note:'ADV'},
+  {id:2,w:1,d:'2026-11-21',t:'g',amt:900,note:'FUTURE'},
+  {id:3,w:2,d:'2026-11-19',t:'g',amt:100,note:'ADV'},
+  {id:4,w:3,d:'2026-11-20',t:'r',amt:50,note:'JAMA'}
+ ];
+ const plan=context.SAN.panelPlan();
+ assert.equal(plan.boundary,'2026-11-21');assert.equal(plan.through,'2026-11-20');
+ assert.equal(plan.list.length,3,'includes workers across all three companies');
+ assert.equal(JSON.stringify(plan.list.map(x=>x.record.carry)),JSON.stringify([0,0,0]));
+ const first=plan.list.find(x=>x.w.id===1);assert.equal(first.i.N,200,'future-dated advance is outside the NIL-through-today cutoff');
+ assert.equal(first.record.settledThrough,'2026-11-20');assert.equal(first.record.cutoff,'before-day');
+});
+
 test('reads worker blocks, yellow/text markers, dates and final totals from screenshot-shaped workbook',()=>{
  const{context,workbook}=fixture(),book=context.SAN.parse(workbook);
  assert.equal(JSON.stringify(book.markers.map(m=>[m.worker.n,m.date])),JSON.stringify([['BUBLY','2026-11-06'],['PRINCE','2026-11-05'],['ABHISHEK VINOD','2026-11-12']]));
