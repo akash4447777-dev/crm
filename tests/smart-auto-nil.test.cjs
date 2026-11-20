@@ -11,14 +11,17 @@ const nillScript=inline.find(s=>s.includes('New NIL checkpoints apply BEFORE'));
 const smartScript=inline.find(s=>s.includes('Smart Auto NIL: preview-first'));
 assert.ok(nillScript&&smartScript,'settlement scripts are embedded in the served page');
 function fixture(){
- const rows=Array.from({length:38},()=>Array.from({length:9},()=>({value:null,fill:{type:'pattern',fgColor:{argb:'FFFFFFFF'}},address:''})));
+ const rows=Array.from({length:45},()=>Array.from({length:9},()=>({value:null,fill:{type:'pattern',fgColor:{argb:'FFFFFFFF'}},address:''})));
  function set(r,c,value,yellow=false){const x=rows[r-1][c-1];x.value=value;x.address=String.fromCharCode(64+c)+r;if(yellow)x.fill={type:'pattern',pattern:'solid',fgColor:{argb:'FFFFFF00'}};}
  for(const[c,n]of [[1,'BUBLY'],[4,'PRINCE'],[7,'ABHISHEK VINOD']]){set(1,c,n);set(2,c,'Date');set(2,c+1,'Amount');set(2,c+2,'Remarks');for(let d=1;d<=30;d++)set(d+2,c,`${String(d).padStart(2,'0')}-11-2026`);}
  // Screenshot-shaped entries and settlement markers.
  set(3,2,7000);set(3,3,'NILL');set(8,2,9467,true);set(8,3,'JAMA',true);
  set(3,5,2000);set(3,6,'NILL');set(7,4,'05-11-2026');set(7,6,'TILL DATE HISABB NILL',true);
  set(4,8,500);set(4,9,'NILL');set(9,8,5000);set(9,9,'NILL');set(14,8,1000,true);set(14,9,'ADV',true);
- for(const[c,v]of [[1,0],[4,'-'],[7,1000]]){set(35,c,'FINAL TOTAL ADV');set(35,c+1,v);set(36,c,'OCT NILL',true);set(36,c+1,'',true);set(36,c+2,'',true);}
+ for(const[c,v]of [[1,0],[4,'-'],[7,1000]]){
+  for(const[r,label]of [[33,'ADV TOTAL'],[34,'JAMA TOTAL'],[35,'ONLINE TOTAL'],[36,'CASH / UNMARKED TOTAL'],[37,'ALL AMOUNTS TOTAL']]){set(r,c,label);set(r,c+1,250);}
+  set(38,c,'FINAL TOTAL ADV');set(38,c+1,v);set(40,c,'PREVIOUS BALANCE');set(40,c+1,500);set(41,c,'NET OUTSTANDING');set(41,c+1,900);set(42,c,'OCT NILL',true);set(42,c+1,'',true);set(42,c+2,'',true);set(43,c,'HISAB NILL 31-10-26',true);
+ }
  const rowObjs=rows.map(cells=>({getCell(c){return cells[c-1]||{value:null};}}));
  const worksheet={name:'November',rowCount:38,columnCount:9,getRow(r){return rowObjs[r-1];}};
  const data={cos:[{m:'BUBLYCO',n:'Factory'},{m:'PRINCECO',n:'Factory'},{m:'ABHISHEKCO',n:'Factory'}],w:[{id:1,n:'BUBLY',c:1},{id:2,n:'PRINCE',c:2},{id:3,n:'ABHISHEK VINOD',c:3}],adv:[],nl:{}};
@@ -30,6 +33,7 @@ test('reads worker blocks, yellow/text markers, dates and final totals from scre
  const{context,workbook}=fixture(),book=context.SAN.parse(workbook);
  assert.equal(JSON.stringify(book.markers.map(m=>[m.worker.n,m.date])),JSON.stringify([['BUBLY','2026-11-06'],['PRINCE','2026-11-05'],['ABHISHEK VINOD','2026-11-12']]));
  assert.equal(book.entries.length,6);
+ assert.equal(book.checkpoints.length,3,'FINAL TOTAL ADVANCE is read from the workbook footer');
  assert.equal(book.workers.length,3);
  assert.equal(book.warnings.length,0,'OCT NILL is a private note and is ignored, including its yellow fill');
  assert.equal(book.issues.length,0,'the note row does not create missing-date blockers');
