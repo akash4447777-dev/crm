@@ -31,7 +31,8 @@ test('reads worker blocks, yellow/text markers, dates and final totals from scre
  assert.equal(JSON.stringify(book.markers.map(m=>[m.worker.n,m.date])),JSON.stringify([['BUBLY','2026-11-06'],['PRINCE','2026-11-05'],['ABHISHEK VINOD','2026-11-12']]));
  assert.equal(book.entries.length,6);
  assert.equal(book.workers.length,3);
- assert.equal(book.warnings.length,3,'OCT NILL opening labels are surfaced for acknowledgement, not misread as dated markers');
+ assert.equal(book.warnings.length,0,'OCT NILL is a private note and is ignored, including its yellow fill');
+ assert.equal(book.issues.length,0,'the note row does not create missing-date blockers');
 });
 test('verifies workers independently and does not Auto Nil the JAMA mismatch',()=>{
  const{context,workbook}=fixture(),book=context.SAN.parse(workbook),preview=context.SAN.analyze(book);
