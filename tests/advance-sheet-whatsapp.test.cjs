@@ -13,13 +13,17 @@ test('sheet PDF dialog offers WhatsApp share for all companies and selected comp
 });
 
 test('sheet PDF keeps the original matrix with four workers per page and richer summaries',()=>{
- assert.match(html,/const PER=4,X0=10,DW=18/);
+ assert.match(html,/const X0=10,CW=277,DW=18/);
+ assert.match(html,/MONTHLY ADVANCE SHEET/);
+ assert.match(html,/DATE-WISE REGISTER/);
  assert.match(html,/Math\.ceil\(d\.ws\.length\/4\)/);
  assert.match(html,/d\.ws\.slice\(p\*4,p\*4\+4\)/);
  assert.match(html,/for\(let start=0;start<workerIds\.length;start\+=4\)/,'NIL detail pages are also grouped by at most four workers');
- assert.match(html,/OPEN \"\+num0\(x\.prev\)\+\" · ADV \"\+num0\(x\.s\.adv\)/);
+ assert.match(html,/\[\[\"OPEN\",x\.prev,ink\],\[\"ADV\",x\.s\.adv,ink\]/);
  assert.match(html,/NET OUTSTANDING/);
- assert.match(html,/\[\"ENTRIES\",x=>x\.cells\.filter/);
+ assert.match(html,/\[\[\"ADV TOTAL\",x=>x\.s\.adv,RGB\.pale\].*\[\"HISAAB NILL\",null,RGB\.sky\]\]/);
+ assert.match(html,/HISAAB NILL/,'legacy Till Date Hisab Nil wording is normalized');
+ assert.match(html,/text\(rm,bx\+W1,y,W2,RH,"c"/,'transaction remarks are centered within their cells');
 });
 
 test('WhatsApp sheet PDF shares the generated PDF file and downloads it when file sharing is unavailable',()=>{

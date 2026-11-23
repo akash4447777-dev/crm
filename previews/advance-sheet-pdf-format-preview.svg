@@ -64,25 +64,25 @@
 <rect x="148" y="305" width="112" height="24" rx="0" fill="#1f4e78" stroke="none" stroke-width="1"/>
 <rect x="260" y="305" width="254" height="24" rx="0" fill="#1f4e78" stroke="none" stroke-width="1"/>
 <text x="204.0" y="321" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0">AMOUNT</text>
-<text x="270" y="321" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="start" letter-spacing="0">REMARKS</text>
+<text x="365" y="321" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0">REMARKS</text>
 <rect x="514" y="278" width="366" height="27" rx="4" fill="#173b50" stroke="none" stroke-width="1"/>
 <text x="697.0" y="297" font-family="DejaVu Sans, sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0">PRINCE</text>
 <rect x="514" y="305" width="112" height="24" rx="0" fill="#1f4e78" stroke="none" stroke-width="1"/>
 <rect x="626" y="305" width="254" height="24" rx="0" fill="#1f4e78" stroke="none" stroke-width="1"/>
 <text x="570.0" y="321" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0">AMOUNT</text>
-<text x="636" y="321" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="start" letter-spacing="0">REMARKS</text>
+<text x="710" y="321" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0">REMARKS</text>
 <rect x="880" y="278" width="366" height="27" rx="4" fill="#173b50" stroke="none" stroke-width="1"/>
 <text x="1063.0" y="297" font-family="DejaVu Sans, sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0">ABHISHEK VINOD</text>
 <rect x="880" y="305" width="112" height="24" rx="0" fill="#1f4e78" stroke="none" stroke-width="1"/>
 <rect x="992" y="305" width="254" height="24" rx="0" fill="#1f4e78" stroke="none" stroke-width="1"/>
 <text x="936.0" y="321" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0">AMOUNT</text>
-<text x="1002" y="321" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="start" letter-spacing="0">REMARKS</text>
+<text x="1055" y="321" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0">REMARKS</text>
 <rect x="1246" y="278" width="366" height="27" rx="4" fill="#173b50" stroke="none" stroke-width="1"/>
 <text x="1429.0" y="297" font-family="DejaVu Sans, sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0">ASHOK</text>
 <rect x="1246" y="305" width="112" height="24" rx="0" fill="#1f4e78" stroke="none" stroke-width="1"/>
 <rect x="1358" y="305" width="254" height="24" rx="0" fill="#1f4e78" stroke="none" stroke-width="1"/>
 <text x="1302.0" y="321" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0">AMOUNT</text>
-<text x="1368" y="321" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="start" letter-spacing="0">REMARKS</text>
+<text x="1476" y="321" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0">REMARKS</text>
 <rect x="48" y="329" width="100" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <text x="57" y="343" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#4e6878" text-anchor="start" letter-spacing="0">01 NOV · SUN</text>
 <rect x="148" y="329" width="112" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
@@ -94,13 +94,13 @@
 <rect x="1246" y="329" width="112" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="1358" y="329" width="254" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <text x="1350" y="343" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#173b50" text-anchor="end" letter-spacing="0">₹500</text>
-<text x="1366" y="343" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="start" letter-spacing="0">Tools</text>
+<text x="1476" y="343" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="middle" letter-spacing="0">Tools</text>
 <rect x="48" y="349" width="100" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <text x="57" y="363" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#4e6878" text-anchor="start" letter-spacing="0">02 NOV · MON</text>
 <rect x="148" y="349" width="112" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="260" y="349" width="254" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <text x="252" y="363" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#173b50" text-anchor="end" letter-spacing="0">₹2,000</text>
-<text x="268" y="363" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="start" letter-spacing="0">Cash advance</text>
+<text x="365" y="363" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="middle" letter-spacing="0">Cash advance</text>
 <rect x="514" y="349" width="112" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="626" y="349" width="254" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="880" y="349" width="112" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
@@ -114,7 +114,7 @@
 <rect x="514" y="369" width="112" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="626" y="369" width="254" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <text x="618" y="383" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#173b50" text-anchor="end" letter-spacing="0">₹3,000</text>
-<text x="634" y="383" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="start" letter-spacing="0">Food / travel</text>
+<text x="710" y="383" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="middle" letter-spacing="0">Food / travel</text>
 <rect x="880" y="369" width="112" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="992" y="369" width="254" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="1246" y="369" width="112" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
@@ -138,7 +138,7 @@
 <rect x="880" y="409" width="112" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="992" y="409" width="254" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <text x="984" y="423" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#173b50" text-anchor="end" letter-spacing="0">₹1,000</text>
-<text x="1000" y="423" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="start" letter-spacing="0">Emergency advance</text>
+<text x="1055" y="423" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="middle" letter-spacing="0">Emergency advance</text>
 <rect x="1246" y="409" width="112" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="1358" y="409" width="254" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="48" y="429" width="100" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
@@ -168,7 +168,7 @@
 <rect x="514" y="469" width="112" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="626" y="469" width="254" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <text x="618" y="483" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#173b50" text-anchor="end" letter-spacing="0">₹5,000</text>
-<text x="634" y="483" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="start" letter-spacing="0">Transport</text>
+<text x="710" y="483" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="middle" letter-spacing="0">Transport</text>
 <rect x="880" y="469" width="112" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="992" y="469" width="254" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="1246" y="469" width="112" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
@@ -188,7 +188,7 @@
 <rect x="148" y="509" width="112" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="260" y="509" width="254" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <text x="252" y="523" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#173b50" text-anchor="end" letter-spacing="0">₹1,500</text>
-<text x="268" y="523" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="start" letter-spacing="0">Site material</text>
+<text x="365" y="523" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="middle" letter-spacing="0">Site material</text>
 <rect x="514" y="509" width="112" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="626" y="509" width="254" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="880" y="509" width="112" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
@@ -214,7 +214,7 @@
 <rect x="880" y="549" width="112" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="992" y="549" width="254" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <text x="984" y="563" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#173b50" text-anchor="end" letter-spacing="0">₹2,000</text>
-<text x="1000" y="563" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="start" letter-spacing="0">Cash advance</text>
+<text x="1055" y="563" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="middle" letter-spacing="0">Cash advance</text>
 <rect x="1246" y="549" width="112" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="1358" y="549" width="254" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="48" y="569" width="100" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
@@ -244,7 +244,7 @@
 <rect x="514" y="609" width="112" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="626" y="609" width="254" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <text x="618" y="623" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#173b50" text-anchor="end" letter-spacing="0">−₹3,000</text>
-<text x="634" y="623" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="start" letter-spacing="0">JAMA · repayment</text>
+<text x="710" y="623" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="middle" letter-spacing="0">JAMA · repayment</text>
 <rect x="880" y="609" width="112" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="992" y="609" width="254" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="1246" y="609" width="112" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
@@ -280,7 +280,7 @@
 <rect x="1246" y="669" width="112" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="1358" y="669" width="254" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <text x="1350" y="683" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#173b50" text-anchor="end" letter-spacing="0">₹1,500</text>
-<text x="1366" y="683" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="start" letter-spacing="0">Medical advance</text>
+<text x="1476" y="683" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="400" fill="#4d6674" text-anchor="middle" letter-spacing="0">Medical advance</text>
 <rect x="48" y="689" width="100" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
 <text x="57" y="703" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#4e6878" text-anchor="start" letter-spacing="0">19 NOV · THU</text>
 <rect x="148" y="689" width="112" height="20" rx="0" fill="#ffffff" stroke="#dce5ea" stroke-width="0.7"/>
@@ -296,7 +296,7 @@
 <rect x="148" y="709" width="112" height="20" rx="0" fill="#fff5cf" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="260" y="709" width="254" height="20" rx="0" fill="#fff5cf" stroke="#dce5ea" stroke-width="0.7"/>
 <text x="252" y="723" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#173b50" text-anchor="end" letter-spacing="0">₹9,000</text>
-<text x="268" y="723" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#087d70" text-anchor="start" letter-spacing="0">HISAAB NIL · carry ₹0</text>
+<text x="365" y="723" font-family="DejaVu Sans, sans-serif" font-size="9" font-weight="700" fill="#087d70" text-anchor="middle" letter-spacing="0">HISAAB NILL · carry ₹0</text>
 <rect x="514" y="709" width="112" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="626" y="709" width="254" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
 <rect x="880" y="709" width="112" height="20" rx="0" fill="#f3f7f9" stroke="#dce5ea" stroke-width="0.7"/>
@@ -454,7 +454,7 @@
 <rect x="1246" y="1001" width="366" height="18" rx="0" fill="#dce6f1" stroke="#d0dbe2" stroke-width="0.7"/>
 <text x="1603" y="1014" font-family="DejaVu Sans, sans-serif" font-size="8.5" font-weight="700" fill="#173b50" text-anchor="end" letter-spacing="0">₹4,500</text>
 <rect x="48" y="1019" width="100" height="18" rx="0" fill="#d7eff0" stroke="#d0dbe2" stroke-width="0.7"/>
-<text x="55" y="1032" font-family="DejaVu Sans, sans-serif" font-size="8.5" font-weight="700" fill="#173b50" text-anchor="start" letter-spacing="0">HISAAB NIL</text>
+<text x="55" y="1032" font-family="DejaVu Sans, sans-serif" font-size="8.5" font-weight="700" fill="#173b50" text-anchor="start" letter-spacing="0">HISAAB NILL</text>
 <rect x="148" y="1019" width="366" height="18" rx="0" fill="#d7eff0" stroke="#d0dbe2" stroke-width="0.7"/>
 <text x="505" y="1032" font-family="DejaVu Sans, sans-serif" font-size="8.5" font-weight="700" fill="#173b50" text-anchor="end" letter-spacing="0">20 NOV · carry 0</text>
 <rect x="514" y="1019" width="366" height="18" rx="0" fill="#d7eff0" stroke="#d0dbe2" stroke-width="0.7"/>
