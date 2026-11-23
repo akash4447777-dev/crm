@@ -18,7 +18,10 @@ test('sheet PDF keeps the original matrix with four workers per page and richer 
  assert.match(html,/DATE-WISE REGISTER/);
  assert.match(html,/Math\.ceil\(d\.ws\.length\/4\)/);
  assert.match(html,/d\.ws\.slice\(p\*4,p\*4\+4\)/);
- assert.match(html,/for\(let start=0;start<workerIds\.length;start\+=4\)/,'NIL detail pages are also grouped by at most four workers');
+ assert.doesNotMatch(html,/function nillPage\(doc,d\)/,'separate NIL-detail appendix is removed from this sheet PDF');
+ assert.match(html,/JAI BALAJI BILLIARDS/);
+ assert.match(html,/id="xsLogo"/);
+ assert.match(html,/doc\.addImage\(sheetLogo/);
  assert.match(html,/\[\[\"OPEN\",x\.prev,ink\],\[\"ADV\",x\.s\.adv,ink\]/);
  assert.match(html,/NET OUTSTANDING/);
  assert.match(html,/\[\[\"ADV TOTAL\",x=>x\.s\.adv,RGB\.pale\].*\[\"HISAAB NILL\",null,RGB\.sky\]\]/);

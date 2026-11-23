@@ -6,10 +6,8 @@
 <rect x="28" y="44" width="1604" height="1086" rx="15" fill="#ffffff" stroke="none" stroke-width="1"/>
 </g>
 <path d="M43 44h1574a15 15 0 0 1 15 15v91H28V59a15 15 0 0 1 15-15z" fill="url(#nav)"/>
-<circle cx="66" cy="79" r="18" fill="#41d1bd"/>
-<text x="66" y="85" font-family="DejaVu Sans, sans-serif" font-size="17" font-weight="700" fill="#12354b" text-anchor="middle" letter-spacing="0">J</text>
-<text x="96" y="70" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#a9c4d1" text-anchor="start" letter-spacing="1.4">JBB PANEL · ADVANCE CONTROL</text>
-<text x="96" y="105" font-family="DejaVu Sans, sans-serif" font-size="28" font-weight="700" fill="#ffffff" text-anchor="start" letter-spacing="0">MONTHLY ADVANCE SHEET</text>
+<text x="52" y="70" font-family="DejaVu Sans, sans-serif" font-size="12" font-weight="700" fill="#a9c4d1" text-anchor="start" letter-spacing="1.4">JAI BALAJI BILLIARDS</text>
+<text x="52" y="105" font-family="DejaVu Sans, sans-serif" font-size="28" font-weight="700" fill="#ffffff" text-anchor="start" letter-spacing="0">MONTHLY ADVANCE SHEET</text>
 <text x="1588" y="72" font-family="DejaVu Sans, sans-serif" font-size="14" font-weight="700" fill="#d5e8ef" text-anchor="end" letter-spacing="0">FACTORY</text>
 <text x="1588" y="100" font-family="DejaVu Sans, sans-serif" font-size="15" font-weight="700" fill="#d5e8ef" text-anchor="end" letter-spacing="0">NOVEMBER 2026</text>
 <rect x="1390" y="111" width="198" height="22" rx="11" fill="#e1f7f2" stroke="none" stroke-width="1"/>
