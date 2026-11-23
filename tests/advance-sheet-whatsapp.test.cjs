@@ -24,6 +24,8 @@ test('sheet PDF keeps the original matrix with four workers per page and richer 
  assert.match(html,/\[\[\"ADV TOTAL\",x=>x\.s\.adv,RGB\.pale\].*\[\"HISAAB NILL\",null,RGB\.sky\]\]/);
  assert.match(html,/HISAAB NILL/,'legacy Till Date Hisab Nil wording is normalized');
  assert.match(html,/text\(rm,bx\+W1,y,W2,RH,"c"/,'transaction remarks are centered within their cells');
+ assert.match(html,/align=="c"\?x\+w\/2:x\+1/,'center-aligned text uses the actual cell midpoint');
+ assert.match(html,/HISAA\?B\{1,2\}\\s\+NIL/,'legacy spelling variants of the NIL remark are normalized');
 });
 
 test('WhatsApp sheet PDF shares the generated PDF file and downloads it when file sharing is unavailable',()=>{
