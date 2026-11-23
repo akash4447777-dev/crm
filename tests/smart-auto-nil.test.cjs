@@ -29,6 +29,12 @@ function fixture(){
  context.window=context;context.globalThis=context;vm.createContext(context);vm.runInContext(nillScript,context);vm.runInContext(smartScript,context);
  return{context,data,workbook:{worksheets:[worksheet]}};
 }
+test('advances tab exposes a WhatsApp PDF shortcut with a no-server file-share route',()=>{
+ assert.match(html,/onclick=\"stmDlg\(\$\{w\.id\}\)\">WhatsApp PDF<\/button>/);
+ assert.match(html,/Share PDF to WhatsApp \/ phone apps \(no server\)/);
+ assert.match(html,/navigator\.canShare&&navigator\.canShare\(\{files:\[f\]\}\)/);
+});
+
 test('panel-only Auto NIL plans all active companies through today with zero carry and leaves future entries alone',()=>{
  const{context,data}=fixture();data.adv=[
   {id:1,w:1,d:'2026-11-20',t:'g',amt:200,note:'ADV'},
